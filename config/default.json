@@ -1,0 +1,13 @@
+{
+    "global": {
+        "port": 3003,
+        "secret": "fckjsfckrct"
+    },
+    "database": {
+        "username": "test",
+        "password": "test",
+        "database": "s42db",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}
