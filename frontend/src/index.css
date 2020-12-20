@@ -6,3 +6,6 @@
     display: flex;
     margin-top: 15%;
 }
+.hidden {
+    display: none;
+}

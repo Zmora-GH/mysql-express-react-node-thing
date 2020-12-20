@@ -1,12 +1,32 @@
 import React, { useState } from 'react';
 
+const axios = require('axios');
+
 export const LoginPage = () => {
-    const [form, setForm] = useState({username: "", password: ""})
+
+    const [form, setForm] = useState({username: "", password: ""});
     const handleChange = event => {
-        setForm({ ...form, [event.target.name]: event.target.value })
-    }
-    const handleFormSubmit = event => {
-        //
+        setForm({ ...form, [event.target.name]: event.target.value });
+    };
+
+    const handleFormSubmit = async (event) => {
+        axios.post('/api/auth/login', {...form})
+        .then(function (resp) {
+            if (resp.status === 201) {
+                window.location.replace("/");
+            };
+        })
+        .catch(function (err) {
+            if (err.response.status === 400) {
+                let usernameAlert = document.getElementById('username-alert')
+                usernameAlert.classList.remove('hidden')
+                setTimeout(() => {
+                    usernameAlert.classList.add('hidden')
+                }, 1800);
+            }
+        })
+
+        event.preventDefault();
     }
     return (
         <div className="position-relative testclass">
@@ -31,6 +51,9 @@ export const LoginPage = () => {
                         required
                         onChange={handleChange}/>
                     <button className="w-100 btn btn-lg btn-success" type="submit">Sign in</button>
+                        <div className="position-absolute alert alert-danger hidden" role="alert" id="username-alert">
+                            <small>User not found or invalid password</small>
+                        </div>
                     </div>
                 </form>
             </div>
