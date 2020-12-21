@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const jsonwebtoken = require('jsonwebtoken');
 const config = require('config');
 const User = require('../models').User;
+const Sequelize = require('sequelize');
 
 const router = Router();
 
@@ -17,7 +18,6 @@ router.post('/register', async (req, res) => {
         const user = await User.create({ username, email, password: pass });
         res.status(201).json({ error: 'message' });
     } catch (err) {
-        console.log(err);
         res.status(500).json({message: 'Oops! auth.router.js'});
     }
 });
@@ -34,8 +34,10 @@ router.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({message: "Invalid password"});
         }
-        const token = jsonwebtoken.sign({userId: user.id}, config.get('global.secret'), {expiresIn: '1h'});
-        res.json({token, userId: user.id});
+        const token = jsonwebtoken.sign({userId: temp_user.id}, config.get('global.secret'), {expiresIn: '1h'});
+        temp_user.last_login = Sequelize.NOW
+        await emp_user.save()
+        res.json({ token, userId: temp_user.id })
     } catch (err) {
         res.status(500).json({message: 'Oops!'});
     }

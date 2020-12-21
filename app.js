@@ -1,8 +1,5 @@
 const express = require('express');
 const config = require('config');
-const passport = require('passport');
-const session = require('express-session');
-const bodyParser = require('body-parser');
 
 ////////////////////////////////////////////
 // var models = require("./backend/models");
@@ -20,11 +17,9 @@ const app = express();
 
 
 app.use(express.json());
-// app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
 
 app.use('/api/auth', require('./backend/routes/auth.router'));
+app.use('/api/table', require('./backend/routes/table.router'));
 
 app.listen(PORT, () => {
     console.log('[OK] Server started on port ', PORT);

@@ -22,7 +22,8 @@ module.exports = function(sequelize, Sequelize) {
             type: Sequelize.DATE
         },
         registration_date: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            defaultValue: Sequelize.NOW
         },
         status: {
             type: Sequelize.BOOLEAN,
