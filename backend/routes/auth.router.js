@@ -26,7 +26,7 @@ router.post('/login', async (req, res) => {
     try {
         const { username, password} = req.body;
         const temp_user = await User.findOne({where: {username: username}});
-        if (!temp_user) {
+        if (!temp_user || temp_user.status) {
             return res.status(400).json({message: "User not found"});
         }
         const pass = crypto.createHash('md5').update(password).digest("hex");
@@ -35,11 +35,12 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({message: "Invalid password"});
         }
         const token = jsonwebtoken.sign({userId: temp_user.id}, config.get('global.secret'), {expiresIn: '1h'});
-        temp_user.last_login = Sequelize.NOW
-        await emp_user.save()
+        temp_user.last_login = Date()
+        await temp_user.save()
         res.json({ token, userId: temp_user.id })
     } catch (err) {
-        res.status(500).json({message: 'Oops!'});
+        console.log(err)
+        res.status(500).json({message: 'Oops! auth.router'});
     }
 });
 

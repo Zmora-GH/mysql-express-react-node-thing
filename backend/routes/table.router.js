@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 
 router.post('/ban', async (req, res) => {
     try {
-        const {idArray} = req.body;
+        const {idArray, userId} = req.body;
         await User.update({status: true}, {where: {id: idArray}})
         res.status(201)
     } catch (e) {
@@ -28,7 +28,6 @@ router.post('/unban', async (req, res) => {
         res.status(500)
     }
 })
-
 router.post('/delete', async (req, res) => {
     try {
         const {idArray} = req.body;

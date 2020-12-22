@@ -10,13 +10,13 @@ const config = require('config');
 // });
 ////////////////////////////////////////////
 
-const PORT = config.get('global.port') || 3003;
+const PORT = config.get('global.port') || 6666;
 
 
 const app = express();
 
 
-app.use(express.json());
+app.use(express.json(type="application/json"));
 
 app.use('/api/auth', require('./backend/routes/auth.router'));
 app.use('/api/table', require('./backend/routes/table.router'));

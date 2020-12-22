@@ -6,6 +6,7 @@
     display: flex;
     margin-top: 15%;
 }
-.hidden {
-    display: none;
+.msg-toast {
+    top: 16px;
+    right: 16px;
 }

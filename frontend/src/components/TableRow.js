@@ -10,8 +10,8 @@ export class TableRow extends Component {
 				<td>{this.props.data.id}</td>
 				<td>{this.props.data.username}</td>
 				<td>{this.props.data.email}</td>
-				<td>{this.props.data.last_login}</td>
-				<td>{this.props.data.registration_date}</td>
+				<td>{new Date(this.props.data.last_login).toLocaleString()}</td>
+				<td>{new Date(this.props.data.registration_date).toLocaleString()}</td>
 				{this.props.data.status ? <td className="table-danger">Banned</td> : <td className="table-success">Not banned</td>}
 			</tr>
 		);

@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {useHttp} from '../hooks/http.hook'
 
 export const RegPage = () => {
-    const {loading, request} = useHttp();
+    const {loading, request, clearError} = useHttp();
     const [form, setForm] = useState({username: "", password: "", email: ""});
     const handleChange = event => {
         setForm({ ...form, [event.target.name]: event.target.value });
     };
-    const handleFormSubmit = (event) => {
+    useEffect( () => {
+        clearError()
+    });
+    const handleFormSubmit = async () => {
         try {
-            const data = request('/api/auth/register', 'POST', {...form})
+            // eslint-disable-next-line
+            const data = await request('/api/auth/register', 'POST', {...form})
+            window.location.href = '/login'
         } catch (e) {}
-        event.preventDefault()
     }
     return (
         <div className="position-relative testclass">
@@ -25,9 +29,6 @@ export const RegPage = () => {
                         placeholder="Username"
                         required
                         onChange={handleChange} />
-                    <div className="position-absolute alert alert-danger hidden" role="alert" id="username-alert">
-                        This name is already in use!
-                    </div>
                     <input type="email"
                         name="email"
                         className="form-control mb-3"
@@ -52,7 +53,6 @@ export const RegPage = () => {
                         if you have an account.
                     </small>
                 </form>
-
             </div>
         </div>
     );

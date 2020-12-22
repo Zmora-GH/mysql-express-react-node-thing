@@ -18,7 +18,7 @@ export class MainPage extends Component {
     async componentDidMount() {
         let response = await axios.get('/api/table');
         let data = await response.data;
-        this.setState({data: data});
+        this.setState({data: data, userId: JSON.parse(localStorage.getItem('userData')).userId});
     }
 
     getSelectedIds() {
@@ -34,25 +34,35 @@ export class MainPage extends Component {
 
     makePostRequest(adr) {
         let selectedIdsArray = this.getSelectedIds()
-        axios.post(adr, {"idArray":selectedIdsArray})
-        .catch(function (error) {
-        })
+        axios.post(adr, {"idArray":selectedIdsArray, "userId":this.state.userId})
+        .catch(function (error) {})
+        if (selectedIdsArray.includes(this.state.userId)) {
+            return false;
+        }
+        return true;
     }
 
     banSelected() {
-        this.makePostRequest('/api/table/ban')
+        const result = this.makePostRequest('/api/table/ban')
+        if (!result) {
+            localStorage.clear()
+        }
         document.location.reload(false);
 
     }
 
     unbanSelected() {
-        this.makePostRequest('/api/table/unban')
-        document.location.reload();
+        // eslint-disable-next-line
+        const result = this.makePostRequest('/api/table/unban')
+        document.location.reload(false);
     }
 
     deleteSelected() {
-        this.makePostRequest('/api/table/delete')
-        document.location.reload();
+        const result = this.makePostRequest('/api/table/delete')
+        if (!result) {
+            localStorage.clear()
+        }
+        document.location.reload(false);
     }
 
     handleCheckChange(event) {
@@ -73,7 +83,7 @@ export class MainPage extends Component {
                          <Icon.UnlockFill color="white" className="mx-2"/>
                      </button>
                     <button className=" btn btn-danger mx-1 btn-sm" onClick={this.deleteSelected}>
-                        <Icon.TrashFill color="white" className="mx-2"/> 
+                        <Icon.TrashFill color="white" className="mx-2"/>
                      </button>
                 </div>
                 <table className="table table-hover table-sm">
@@ -89,7 +99,7 @@ export class MainPage extends Component {
                             <th>REG DATE</th>
                             <th>STATUS</th>
                         </tr>
-                        {this.state.data.map((item => <TableRow data={item}/>))}
+                        {this.state.data.map(item => <TableRow data={item} key={item.id}/>)}
                     </thead>
                     <tbody id="tableBody">
                     </tbody>
