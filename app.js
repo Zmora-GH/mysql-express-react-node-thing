@@ -1,6 +1,6 @@
 const express = require('express');
 const config = require('config');
-
+const path = require('path');
 ////////////////////////////////////////////
 // var models = require("./backend/models");
 // models.sequelize.sync().then(function() {
@@ -20,6 +20,13 @@ app.use(express.json(type="application/json"));
 
 app.use('/api/auth', require('./backend/routes/auth.router'));
 app.use('/api/table', require('./backend/routes/table.router'));
+
+if (process.env.NODE_ENV === 'production') {
+    app.use('/', express.static(path.join(__dirname, 'frontend', 'build')))
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
 app.listen(PORT, () => {
     console.log('[OK] Server started on port ', PORT);

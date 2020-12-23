@@ -1,13 +1,13 @@
 {
     "global": {
-        "port": 6666,
-        "secret": "fckjsfckrct"
+        "port": 3355,
+        "secret": "fckjsfckrct4g4g2df2d9l9l8"
     },
     "database": {
-        "username": "test",
-        "password": "test",
-        "database": "s42db",
-        "host": "127.0.0.1",
+        "username": "bd419e4d64ff39",
+        "password": "7ae1c630",
+        "database": "heroku_5920fe6f640a981",
+        "host": "us-cdbr-east-02.cleardb.com",
         "dialect": "mysql"
     }
 }
