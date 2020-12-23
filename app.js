@@ -1,14 +1,14 @@
 const express = require('express');
 const config = require('config');
 const path = require('path');
-////////////////////////////////////////////
-// var models = require("./backend/models");
-// models.sequelize.sync().then(function() {
-//     console.log('Nice! Database looks fine');
-// }).catch(function(err) {
-//     console.log(err, "Something went wrong with the Database Update!");
-// });
-////////////////////////////////////////////
+
+var models = require("./backend/models");
+models.sequelize.sync().then(function() {
+    console.log('Nice! Database looks fine');
+}).catch(function(err) {
+    console.log(err, "Something went wrong with the Database Update!");
+});
+
 
 const PORT = process.env.PORT || config.get('global.port') || 80;
 
