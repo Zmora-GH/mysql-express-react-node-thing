@@ -10,7 +10,7 @@ const path = require('path');
 // });
 ////////////////////////////////////////////
 
-const PORT = config.get('global.port') || 6666;
+const PORT = process.env.PORT || config.get('global.port') || 80;
 
 
 const app = express();
