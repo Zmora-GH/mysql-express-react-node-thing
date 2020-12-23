@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
-    "build":"npm run build --prefix frontend"
+    "build":"npm run build --prefix frontend",
     "client": "npm run start --prefix frontend",
     "client:install": "npm install --prefix frontend",
     "client:build": "npm run build --prefix frontend",
