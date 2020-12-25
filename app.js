@@ -10,8 +10,7 @@ models.sequelize.sync().then(function() {
 });
 
 
-//const PORT = process.env.PORT || config.get('global.port') || 80;
-const PORT = config.get('global.port') || 80;
+const PORT = process.env.PORT || config.get('global.port');
 
 const app = express();
 
