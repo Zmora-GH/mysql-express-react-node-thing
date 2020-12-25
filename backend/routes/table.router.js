@@ -9,6 +9,16 @@ router.get('/', async (req, res) => {
 	res.send(userList);
 })
 
+router.post('/check', async (req, res) => {
+    try {
+        const {userId} = req.body;
+        let tempuser = await User.findOne({where: {id: userId}})
+        res.json({"ID": tempuser.id, "STATUS": tempuser.status})      
+    } catch (e) {
+        res.status(500)
+    }
+})
+
 router.post('/ban', async (req, res) => {
     try {
         const {idArray, userId} = req.body;

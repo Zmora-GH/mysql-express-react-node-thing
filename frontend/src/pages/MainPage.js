@@ -14,11 +14,21 @@ export class MainPage extends Component {
         this.deleteSelected = this.deleteSelected.bind(this)
         this.handleCheckChange = this.handleCheckChange.bind(this)
     }
-
+    async someFunc() {
+        console.log('<0   Data:   >')
+        await axios.post('/api/table/check', {"userId":this.state.userId})
+        .then((res)=> {
+            if (res.data.STATUS) {
+                localStorage.clear()
+            }           
+        })
+        .catch((err)=> {})
+    }
     async componentDidMount() {
         let response = await axios.get('/api/table');
         let data = await response.data;
         this.setState({data: data, userId: JSON.parse(localStorage.getItem('userData')).userId});
+        
     }
 
     getSelectedIds() {
@@ -33,6 +43,7 @@ export class MainPage extends Component {
     }
 
     makePostRequest(adr) {
+        this.someFunc()
         let selectedIdsArray = this.getSelectedIds()
         axios.post(adr, {"idArray":selectedIdsArray, "userId":this.state.userId})
         .catch(function (error) {})

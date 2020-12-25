@@ -1,6 +1,6 @@
 {
     "global": {
-        "port": 6666,
+        "port": 3355,
         "secret": "fckjsfckrct"
     },
     "database": {
